@@ -1,5 +1,6 @@
 package io.wyu.thelastbakeoff;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void startApp(View v) {
-
+    Intent intent = new Intent(MainActivity.this, AppActivity.class);
+    MainActivity.this.startActivity(intent);
   }
 }
