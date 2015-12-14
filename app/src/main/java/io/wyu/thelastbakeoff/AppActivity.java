@@ -115,12 +115,12 @@ public class AppActivity extends AppCompatActivity implements SensorEventListene
     }
 
     // trying this out: if the user flips the phone "upwards"
-    if (prevZ - event.values[2] < -.07) {
+    if (prevZ - event.values[2] < -.03) {
       if (currButton == targetButton && locked) {
         currAction = 2;
       }
     // and downwards
-    } else if (prevZ - event.values[2] > .05) {
+    } else if (prevZ - event.values[2] > .025) {
       if (currButton == targetButton && locked) {
         currAction = 1;
       }
@@ -147,71 +147,29 @@ public class AppActivity extends AppCompatActivity implements SensorEventListene
         targetAction = random.nextBoolean() ? 1 : 2;
         currButton = currAction = 0;
         locked = false;
-
-        for (int i = 0; i < TOTAL_BUTTONS; i++) {
-          Button temp = (Button) findViewById(getButton(i));
-          //@TODO: This is mega messy, clean up logic later
-          if (i == targetButton && currButton != targetButton) {
-            temp.setBackgroundColor(Color.parseColor("#00E5FF"));
-            temp.setText("");
-          } else if (i == currButton) {
-            if (currButton == targetButton && locked) {
-              temp.setBackgroundColor(Color.parseColor("#F50057"));
-              if (targetAction == 1) {
-                temp.setText("up");
-              } else {
-                temp.setText("down");
-              }
-            } else if (currButton == targetButton && !locked) {
-              temp.setBackgroundColor(Color.parseColor("#00E676"));
-              if (targetAction == 1) {
-                temp.setText("up");
-              } else {
-                temp.setText("down");
-              }
-            } else {
-              temp.setBackgroundColor(Color.parseColor("#BBBBBB"));
-              temp.setText("");
-            }
-          } else {
-            temp.setBackgroundColor(Color.parseColor("#888888"));
-            temp.setText("");
-          }
-        }
       }
     }
+    updateButtons();
 
+  }
+
+  private void updateButtons() {
+
+    // getTargetColor() and getTargetString()
     for (int i = 0; i < TOTAL_BUTTONS; i++) {
       Button temp = (Button) findViewById(getButton(i));
-      //@TODO: This is mega messy, clean up logic later
-      if (i == targetButton && currButton != targetButton) {
-        temp.setBackgroundColor(Color.parseColor("#00E5FF"));
-        temp.setText("");
+      if (i == targetButton) {
+        temp.setBackgroundColor(getTargetColor());
+        temp.setText(getTargetString());
+      // should only reach this point if currButton != targetButton
       } else if (i == currButton) {
-        if (currButton == targetButton && locked) {
-          temp.setBackgroundColor(Color.parseColor("#F50057"));
-          if (targetAction == 1) {
-            temp.setText("up");
-          } else {
-            temp.setText("down");
-          }
-        } else if (currButton == targetButton && !locked) {
-          temp.setBackgroundColor(Color.parseColor("#00E676"));
-          if (targetAction == 1) {
-            temp.setText("up");
-          } else {
-            temp.setText("down");
-          }
-        } else {
-          temp.setBackgroundColor(Color.parseColor("#BBBBBB"));
-          temp.setText("");
-        }
+        temp.setBackgroundColor(Color.parseColor("#BBBBBB"));
+        temp.setText("");
       } else {
         temp.setBackgroundColor(Color.parseColor("#666666"));
         temp.setText("");
       }
     }
-
   }
 
   // wrapper/helper functions
@@ -227,6 +185,20 @@ public class AppActivity extends AppCompatActivity implements SensorEventListene
     } else {
       return -1;
     }
+  }
+
+  private int getTargetColor() {
+    if (currButton == targetButton) {
+      return Color.parseColor("#F50057");
+    }
+    return Color.parseColor("#00E5FF");
+  }
+
+  private String getTargetString() {
+    if (targetAction == 1) {
+      return "tap";
+    }
+    return "hold";
   }
 
 }
