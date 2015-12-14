@@ -133,7 +133,6 @@ public class AppActivity extends AppCompatActivity implements SensorEventListene
   private void updateScreen() {
     if (currAction == targetAction && currButton == targetButton && locked) {
       trialTimes[currTrial] = System.currentTimeMillis() - trialStart;
-      //@TODO: Fix terrible style
       currTrial++;
       if (currTrial >= TOTAL_TRIALS) {
         Intent intent = new Intent(AppActivity.this, ResultsActivity.class);
@@ -164,10 +163,10 @@ public class AppActivity extends AppCompatActivity implements SensorEventListene
       // should only reach this point if currButton != targetButton
       } else if (i == currButton) {
         temp.setBackgroundColor(Color.parseColor("#BBBBBB"));
-        temp.setText("");
+        temp.setText(String.valueOf(i + 1));
       } else {
         temp.setBackgroundColor(Color.parseColor("#666666"));
-        temp.setText("");
+        temp.setText(String.valueOf(i + 1));
       }
     }
   }
