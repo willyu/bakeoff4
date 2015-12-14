@@ -22,13 +22,13 @@
       android:text="@string/header_string"/>
 
     <TextView
-      android:id="@+id/total_trials"
+      android:id="@+id/light"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       style="@style/AppTextTheme"/>
 
     <TextView
-      android:id="@+id/curr_trial"
+      android:id="@+id/rotation"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       style="@style/AppTextTheme"/>
